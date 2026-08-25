@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دكان | نبني متجرك الإلكتروني</title>
+  <meta name="description" content="الشريك التقني الأفضل لتأسيس وإدارة المتاجر الإلكترونية في العراق.">
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==========================================
+       TYPOGRAPHY - THMANYAH SANS ONLY
+       ========================================== */
+    @font-face { font-family: 'Thmanyah Sans'; src: url('thmanyah typeface/thmanyahsans/woff2/thmanyahsans-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Thmanyah Sans'; src: url('thmanyah typeface/thmanyahsans/woff2/thmanyahsans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Thmanyah Sans'; src: url('thmanyah typeface/thmanyahsans/woff2/thmanyahsans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Thmanyah Sans'; src: url('thmanyah typeface/thmanyahsans/woff2/thmanyahsans-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Thmanyah Sans'; src: url('thmanyah typeface/thmanyahsans/woff2/thmanyahsans-Black.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+
+    /* ==========================================
+       ROOT VARIABLES
+       ========================================== */
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F9F8F6;
+      --bg-dark: #0A0A0A;
+      --bg-darker: #050505;
+      
+      --text-main: #1A1A1A;
+      --text-muted: #666666;
+      --text-light: #999999;
+      
+      --brand: #A92F32;
+      --brand-hover: #8C2326;
+      
+      --border: #E8E5E1;
+      --border-dark: #222222;
+      
+      --sans: 'Thmanyah Sans', system-ui, sans-serif;
+      
+      --ease: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* ==========================================
+       RESET & BASE
+       ========================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--sans);
+      color: var(--text-main);
+      background-color: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; transition: color 0.3s var(--ease); }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; object-fit: cover; }
+    
+    ::selection { background: var(--brand); color: #fff; }
+
+    /* ==========================================
+       UTILITIES
+       ========================================== */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 5%; }
+    .section { padding: 120px 0; border-bottom: 1px solid var(--border); }
+    .section-dark { background-color: var(--bg-dark); color: #fff; border-bottom-color: var(--border-dark); }
+    .section-alt { background-color: var(--bg-alt); }
+    
+    .text-brand { color: var(--brand); }
+
+    /* MDOD (Decorative Dash) */
+    .mdod {
+      display: block; width: 80px; height: 3px; border: none;
+      background: var(--brand); border-radius: 2px;
+      margin: 32px 0;
+    }
+    .mdod.center { margin-inline: auto; }
+    .mdod.long { width: 140px; }
+    .mdod.dark { background: #333; opacity: 1; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 18px 40px; font-family: var(--sans); font-size: 1.125rem; font-weight: 700;
+      border-radius: 8px; cursor: pointer; transition: all 0.4s var(--ease); border: 1px solid transparent;
+    }
+    .btn-brand { background: var(--brand); color: #fff; box-shadow: 0 4px 14px rgba(169,47,50,0.15); }
+    .btn-brand:hover { background: var(--brand-hover); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(169,47,50,0.25); }
+    .btn-outline { background: transparent; border-color: var(--border); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--text-main); transform: translateY(-3px); background: var(--bg-alt); }
+    .btn-dark { background: #fff; color: var(--bg-dark); }
+    .btn-dark:hover { background: #f0f0f0; transform: translateY(-3px); }
+
+    /* Typography scale */
+    .h1 { font-family: var(--sans); font-weight: 900; font-size: clamp(3.2rem, 6.5vw, 6rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    .h2 { font-family: var(--sans); font-weight: 900; font-size: clamp(2.4rem, 4.5vw, 4rem); line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.01em;}
+    .h3 { font-family: var(--sans); font-weight: 900; font-size: 1.6rem; margin-bottom: 0.75rem; }
+    
+    .lead { font-size: clamp(1.15rem, 2vw, 1.4rem); color: var(--text-muted); line-height: 1.8; font-weight: 400; }
+    .lead-large { font-size: 1.6rem; color: var(--text-main); line-height: 1.7; font-weight: 500; margin-bottom: 24px; }
+    
+    .kicker {
+      display: inline-flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 700;
+      color: var(--brand); margin-bottom: 24px; background: rgba(169,47,50,0.05); padding: 8px 16px; border-radius: 50px;
+    }
+
+    /* ==========================================
+       HEADER
+       ========================================== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; height: 90px; display: flex; align-items: center;
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent; z-index: 1000; transition: all 0.4s var(--ease);
+    }
+    .header.scrolled { border-bottom-color: var(--border); height: 80px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+    .header .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    
+    .logo { font-family: var(--sans); font-size: 2.4rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.02em; }
+    .logo span { color: var(--brand); }
+    
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { font-weight: 500; font-size: 1rem; color: var(--text-muted); position: relative; padding: 4px 0; }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--brand);
+      transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text-main); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    
+    .header-cta { padding: 12px 28px; font-size: 1rem; }
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--text-main); }
+
+    /* ==========================================
+       HERO
+       ========================================== */
+    .hero {
+      padding: 220px 0 120px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      border-bottom: 1px solid var(--border); position: relative; background: radial-gradient(circle at top left, var(--bg-alt), var(--bg) 60%);
+    }
+    .hero-content { max-width: 900px; position: relative; z-index: 2; }
+    .hero-desc { margin-bottom: 48px; max-width: 700px; }
+    .hero-buttons { display: flex; gap: 20px; flex-wrap: wrap; }
+    
+    .grid-lines { position: absolute; inset: 0; pointer-events: none; z-index: 1; display: flex; justify-content: space-between; padding: 0 5%; }
+    .grid-line { width: 1px; height: 100%; background: var(--border); opacity: 0.6; }
+
+    /* ==========================================
+       TRUST STRIP
+       ========================================== */
+    .trust-strip { padding: 40px 0; background: var(--bg-dark); color: #fff; overflow: hidden; }
+    .trust-inner { display: flex; align-items: center; gap: 80px; width: max-content; animation: marquee-left 35s linear infinite; }
+    .trust-item { font-family: var(--sans); font-size: 1.4rem; font-weight: 700; color: #E8E5E1; display: flex; align-items: center; gap: 20px; }
+    .trust-item i { color: var(--brand); }
+    
+    @keyframes marquee-left { to { transform: translateX(50%); } }
+
+    /* ==========================================
+       EDITORIAL SECTION
+       ========================================== */
+    .editorial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+    .editorial-text p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.85; }
+    .editorial-text p strong { color: var(--text-main); font-weight: 700; }
+    
+    .stat-box { border-top: 2px solid var(--text-main); padding-top: 32px; margin-top: 56px; }
+    .stat-number { font-family: var(--sans); font-size: 5rem; font-weight: 900; line-height: 1; margin-bottom: 12px; color: var(--brand); }
+    .stat-label { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
+
+    /* ==========================================
+       FEATURES
+       ========================================== */
+    .features-list { margin-top: 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .feature-item {
+      padding: 48px 40px; background: #fff; border: 1px solid var(--border);
+      transition: all 0.4s var(--ease); border-radius: 16px; position: relative; overflow: hidden;
+    }
+    .feature-item::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: transparent; transition: background 0.4s var(--ease);
+    }
+    .feature-item:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,0,0,0.06); border-color: transparent; }
+    .feature-item:hover::before { background: var(--brand); }
+    .feature-icon { margin-bottom: 32px; color: var(--brand); width: 56px; height: 56px; padding: 12px; background: rgba(169,47,50,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center;}
+    .feature-item p { color: var(--text-muted); font-size: 1.1rem; }
+
+    /* ==========================================
+       TESTIMONIALS (MARQUEE RIGHT)
+       ========================================== */
+    .testimonials { padding: 120px 0; overflow: hidden; background: #FAFAFA; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    
+    .testimonials-track {
+      display: flex; gap: 32px; width: max-content;
+      animation: marquee-right 40s linear infinite;
+    }
+    
+    @keyframes marquee-right {
+      from { transform: translateX(50%); }
+      to { transform: translateX(0%); }
+    }
+
+    .review-card {
+      width: 420px; padding: 48px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between;
+      white-space: normal; flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .review-text { font-size: 1.15rem; line-height: 1.8; margin-bottom: 32px; font-weight: 500; position: relative; z-index: 2; }
+    .reviewer { display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+    .reviewer-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); background: #E8E5E1; }
+    .reviewer-info h4 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; color: inherit; }
+    .reviewer-info span { font-size: 0.95rem; opacity: 0.8; }
+    
+    .quote-bg { position: absolute; top: -10px; right: 20px; width: 120px; height: 120px; opacity: 0.05; z-index: 1; pointer-events: none; }
+
+    /* Unique Card Styles */
+    .rc-1 { background: var(--brand); color: #fff; }
+    .rc-1 .reviewer-info h4 { color: #fff; }
+    .rc-1 .quote-bg { color: #000; }
+    
+    .rc-2 { background: #fff; border: 1px solid var(--border); color: var(--text-main); }
+    .rc-2 .review-text { color: var(--text-muted); }
+    .rc-2 .quote-bg { color: var(--brand); opacity: 0.03; }
+    .rc-2 .reviewer-img { border-color: var(--brand); }
+    
+    .rc-3 { background: var(--bg-dark); color: #fff; }
+    .rc-3 .reviewer-info h4 { color: #fff; }
+    .rc-3 .quote-bg { color: #fff; opacity: 0.05; }
+    
+    .rc-4 { background: #F3F0EB; color: var(--text-main); border: 1px solid #E4DFD6; }
+    .rc-4 .review-text { font-style: italic; }
+    .rc-4 .reviewer-img { border-color: #D4CDBC; }
+
+    .rc-5 { background: #fff; border: 2px solid var(--brand); color: var(--text-main); box-shadow: 0 12px 30px rgba(169,47,50,0.08); }
+
+    /* ==========================================
+       PROCESS
+       ========================================== */
+    .process-steps { display: flex; flex-direction: column; margin-top: 80px; border-top: 1px solid var(--border); }
+    .process-step {
+      display: grid; grid-template-columns: 100px 1fr 1fr; gap: 40px; padding: 60px 0;
+      border-bottom: 1px solid var(--border); align-items: start; transition: background 0.4s var(--ease);
+    }
+    .process-step:hover { background: var(--bg-alt); padding-right: 32px; padding-left: 32px; border-radius: 16px; border-bottom-color: transparent;}
+    .step-icon-wrap { width: 80px; height: 80px; background: #fff; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand); font-size: 2rem; font-weight: 900; box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+    .step-title { font-family: var(--sans); font-size: 1.8rem; font-weight: 900; margin-top: 12px;}
+    .step-desc { font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-top: 12px;}
+
+    /* ==========================================
+       PRICING
+       ========================================== */
+    .pricing-table { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 80px; }
+    .price-card {
+      padding: 60px; border: 1px solid var(--border); background: #fff; border-radius: 20px;
+      display: flex; flex-direction: column; transition: all 0.4s var(--ease); position: relative;
+    }
+    .price-card.premium { border: 2px solid var(--text-main); box-shadow: 0 20px 60px rgba(0,0,0,0.06); }
+    .price-card.premium::before {
+      content: 'الخيار المفضل'; position: absolute; top: -16px; right: 48px;
+      background: var(--text-main); color: #fff; font-size: 0.95rem; font-weight: 700; padding: 8px 24px; border-radius: 8px;
+    }
+    .price-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+    
+    .plan-name { font-family: var(--sans); font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; }
+    .plan-desc { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 32px; min-height: 56px; }
+    .plan-price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .price-val { font-family: var(--sans); font-size: 4.5rem; font-weight: 900; line-height: 1; color: var(--brand); }
+    .price-cur { font-size: 1.25rem; font-weight: 700; color: var(--text-muted); }
+    
+    .plan-features { flex: 1; display: flex; flex-direction: column; gap: 20px; margin-bottom: 48px; }
+    .plan-features li { display: flex; align-items: flex-start; gap: 16px; font-size: 1.15rem; color: var(--text-main); font-weight: 500; }
+    .plan-features i { color: var(--brand); margin-top: 4px; width: 22px; height: 22px; }
+    
+    .price-card .btn { width: 100%; padding: 20px; }
+
+    /* ==========================================
+       MEGA FOOTER
+       ========================================== */
+    .footer { background: var(--bg-dark); color: #fff; position: relative; overflow: hidden; }
+    .footer::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at top right, rgba(169,47,50,0.1), transparent 50%); pointer-events: none;
+    }
+    
+    .footer-cta {
+      padding: 100px 5%; text-align: center; border-bottom: 1px solid var(--border-dark);
+    }
+    .footer-cta h2 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; margin-bottom: 40px; color: #fff; }
+    .footer-cta .btn { font-size: 1.25rem; padding: 20px 48px; border-radius: 50px; }
+    
+    .footer-main { padding: 80px 5% 40px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 80px; margin-bottom: 80px; }
+    
+    .footer-brand .logo { font-size: 3.5rem; color: #fff; margin-bottom: 24px; display: inline-block; }
+    .footer-desc { color: var(--text-light); font-size: 1.15rem; max-width: 400px; line-height: 1.8; margin-bottom: 32px; }
+    
+    .social-links { display: flex; gap: 16px; }
+    .social-links a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--border-dark); color: #fff; transition: all 0.3s; }
+    .social-links a:hover { background: var(--brand); transform: translateY(-3px); }
+    .social-links svg { width: 20px; height: 20px; }
+    
+    .footer-heading { font-family: var(--sans); font-weight: 700; font-size: 1.25rem; margin-bottom: 32px; color: #fff; }
+    .footer-links { display: flex; flex-direction: column; gap: 16px; }
+    .footer-links a { color: var(--text-light); font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+    .footer-links a:hover { color: #fff; padding-right: 8px; }
+    
+    .footer-bottom {
+      padding-top: 32px; border-top: 1px solid var(--border-dark);
+      display: flex; justify-content: space-between; align-items: center; color: var(--text-light); font-size: 1rem;
+    }
+
+    /* ==========================================
+       ANIMATIONS
+       ========================================== */
+    .reveal { opacity: 0; transform: translateY(40px); }
+
+    /* ==========================================
+       RESPONSIVE
+       ========================================== */
+    @media (max-width: 1024px) {
+      .editorial-grid { grid-template-columns: 1fr; gap: 40px; }
+      .features-list { grid-template-columns: 1fr 1fr; }
+      .process-step { grid-template-columns: 80px 1fr; }
+      .process-step .step-desc { grid-column: 1 / -1; }
+      .pricing-table { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    
+    @media (max-width: 768px) {
+      .h1 { font-size: 2.2rem; }
+      .h2 { font-size: 1.8rem; }
+      .section { padding: 60px 0; }
+      .hero { padding: 140px 0 60px; text-align: center; }
+      .hero-content { display: flex; flex-direction: column; align-items: center; }
+      .mdod { margin-inline: auto; }
+      .nav-links { display: none; }
+      .header-cta { display: inline-flex; padding: 10px 20px; font-size: 0.9rem; }
+      .menu-toggle { display: none; }
+      .features-list { grid-template-columns: 1fr; gap: 24px; }
+      .feature-item { padding: 32px 24px; text-align: center; }
+      .feature-icon { margin-inline: auto; }
+      .process-step { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; text-align: center; }
+      .step-icon-wrap { margin-inline: auto; margin-bottom: 8px; }
+      .price-card { padding: 32px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-brand .logo { margin-inline: auto; display: block; }
+      .social-links { justify-content: center; }
+      .footer-links { align-items: center; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; padding-bottom: 24px; }
+      .footer-cta h2 { font-size: 1.8rem; }
+      .review-card { width: 85vw; padding: 32px; }
+      .hero-buttons { justify-content: center; }
+      .editorial-title { text-align: center; }
+      .editorial-text { text-align: center; }
+      .stat-box { display: flex; flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative Grid -->
+  <div class="grid-lines">
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <a href="#" class="logo">دكان<span>.</span></a>
+      <nav class="nav-links">
+        <a href="#about">لماذا دكان؟</a>
+        <a href="#features">المميزات</a>
+        <a href="#process">طريقة العمل</a>
+        <a href="#pricing">الأسعار</a>
+      </nav>
+      <a href="#pricing" class="btn btn-brand header-cta">ابدأ الآن</a>
+      <button class="menu-toggle"><i data-lucide="menu"></i></button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="kicker reveal">
+          <i data-lucide="zap" width="16" height="16"></i> التجارة الإلكترونية، ببساطة وقوة
+        </div>
+        
+        <h1 class="h1 reveal">متجر إلكتروني مصمم ليبيع،<br>وليس ليكون مجرد واجهة.</h1>
+        <hr class="mdod reveal">
+        <p class="lead hero-desc reveal">
+          "دكان" هو شريكك التقني الموثوق في العراق. نجمع بين التصميم العصري الجذاب ونظام استقبال الطلبات المباشر عبر الواتساب لتأسيس متجر يحول الزوار إلى عملاء مخلصين، دون تعقيدات تقنية أو مشاكل دفع.
+        </p>
+        <div class="hero-buttons reveal">
+          <a href="#pricing" class="btn btn-brand">ابنِ متجرك اليوم</a>
+          <a href="#process" class="btn btn-outline">كيف نعمل معاً؟</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Strip -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item"><i data-lucide="pen-tool"></i> تصميم مخصص للبراند</div>
+      <div class="trust-item"><i data-lucide="message-circle"></i> الطلب والفاتورة عبر الواتساب</div>
+      <div class="trust-item"><i data-lucide="layout-dashboard"></i> لوحة تحكم عربية بسيطة</div>
+      <div class="trust-item"><i data-lucide="rocket"></i> استضافة سحابية سريعة</div>
+      <div class="trust-item"><i data-lucide="headphones"></i> دعم فني مستمر</div>
+      <!-- Repeat for seamless scroll -->
+      <div class="trust-item"><i data-lucide="pen-tool"></i> تصميم مخصص للبراند</div>
+      <div class="trust-item"><i data-lucide="message-circle"></i> الطلب والفاتورة عبر الواتساب</div>
+      <div class="trust-item"><i data-lucide="layout-dashboard"></i> لوحة تحكم عربية بسيطة</div>
+      <div class="trust-item"><i data-lucide="rocket"></i> استضافة سحابية سريعة</div>
+      <div class="trust-item"><i data-lucide="headphones"></i> دعم فني مستمر</div>
+    </div>
+  </div>
+
+  <!-- Editorial About Section -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="kicker reveal">المشكلة والحل</div>
+      <div class="editorial-grid">
+        <div class="editorial-title reveal">
+          <h2 class="h2">لماذا تفشل معظم المتاجر المبنية على قوالب جاهزة؟</h2>
+          <hr class="mdod long">
+        </div>
+        <div class="editorial-text reveal">
+          <p class="lead-large">
+            في عالم التجارة الإلكترونية اليوم، استخدام قالب جاهز مستنسخ لم يعد يكفي. العميل يقرر البقاء في متجرك أو المغادرة خلال ثوانٍ معدودة.
+          </p>
+          <p>
+            المنصات الجاهزة تتركك وحيداً مع لوحات تحكم معقدة ومشاكل في بوابات الدفع. هنا يأتي دور <strong>"دكان"</strong>. نحن نبني المتجر من الصفر، ونجعل عملية الطلب سهلة جداً للعميل العراقي من خلال <strong>نظام إرسال الفاتورة والطلب مباشرة إلى الواتساب الخاص بك.</strong>
+          </p>
+          <div class="stat-box">
+            <div class="stat-number">٤٨</div>
+            <div class="stat-label">ساعة فقط كمتوسط لإطلاق متجرك بالكامل.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section section-alt" id="features">
+    <div class="container">
+      <div class="kicker reveal">البنية التقنية</div>
+      <h2 class="h2 reveal" style="max-width: 900px;">كل ما تحتاجه لإدارة تجارتك باحترافية،<br> وبدون أي تعقيد.</h2>
+      <hr class="mdod reveal">
+      
+      <div class="features-list">
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="layout-template" width="32" height="32"></i></div>
+          <h3 class="h3">واجهات مصممة للمبيعات</h3>
+          <p>نبتعد عن العشوائية. نصمم تجربة مستخدم (UX) مدروسة تقود العميل مباشرة من رؤية المنتج إلى إتمام الشراء بسلاسة تامة.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="message-square" width="32" height="32"></i></div>
+          <h3 class="h3">نظام الطلب عبر الواتساب</h3>
+          <p>لا حاجة لتعقيدات بوابات الدفع. العميل يختار منتجاته، ويتم إرسال فاتورة وتفاصيل الطلب تلقائياً لأسلس تجربة بيع في السوق العراقي.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="sliders-horizontal" width="32" height="32"></i></div>
+          <h3 class="h3">لوحة تحكم ذكية وبسيطة</h3>
+          <p>إدارة المنتجات، المخزون، والأسعار عبر لوحة تحكم باللغة العربية، مصممة لتكون واضحة حتى لغير المتخصصين بالتقنية.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="zap" width="32" height="32"></i></div>
+          <h3 class="h3">سرعة تحميل فائقة</h3>
+          <p>كل ثانية تأخير تكلفك مبيعات. متاجرنا مبنية بأحدث التقنيات ومستضافة على سيرفرات سحابية لضمان سرعة تصفح لحظية.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="smartphone" width="32" height="32"></i></div>
+          <h3 class="h3">توافق تام مع الهواتف</h3>
+          <p>أكثر من 80% من التسوق يتم عبر الموبايل. لذا نبني المتاجر بعقلية Mobile-First لتجربة تصفح مثالية على كافة الشاشات.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon"><i data-lucide="shield-check" width="32" height="32"></i></div>
+          <h3 class="h3">حماية وأمان للبيانات</h3>
+          <p>تشفير SSL كامل لحماية متجرك، مع نسخ احتياطي يومي تلقائي لضمان عدم فقدان أي معلومة أبداً.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Marquee Section -->
+  <section class="testimonials">
+    <div class="testimonials-header container">
+      <div class="kicker reveal">تجارب النجاح</div>
+      <h2 class="h2 reveal">ماذا يقول عملاؤنا؟</h2>
+      <hr class="mdod center reveal">
+    </div>
+    
+    <div class="testimonials-track">
+      <!-- Unique Card 1 -->
+      <div class="review-card rc-1">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"تجربتي مع دكان كانت استثنائية. من أول يوم فهموا المطلوب وصمموا متجر يعكس هوية البراند. نظام الطلب على الواتساب سهل علينا الكثير ورفع المبيعات."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=11" alt="أحمد عبدالله" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>أحمد عبدالله</h4>
+            <span>مؤسس براند ملابس محلي</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Unique Card 2 -->
+      <div class="review-card rc-2">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"أفضل ما في دكان هو الدعم الفني. لم يتركوني بعد الإطلاق. لوحة التحكم جداً بسيطة، واستقبال الفواتير جاهزة على الواتساب وفر علي جهد كبير."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=5" alt="سارة علي" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>سارة علي</h4>
+            <span>صاحبة متجر مستحضرات تجميل</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Unique Card 3 -->
+      <div class="review-card rc-3">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"كنت متخوف من تعقيد الدفع الإلكتروني، لكن فريق دكان اقترح نظام الطلب المباشر. المتجر أنيق جداً والعميل يطلب بسهولة تامة. عمل احترافي."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=8" alt="محمد حسن" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>محمد حسن</h4>
+            <span>مدير متجر إلكترونيات</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Unique Card 4 -->
+      <div class="review-card rc-4">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"التصميم الذي استلمته فاق توقعاتي. لم يستخدموا قوالب جاهزة مكررة، بل صمموا تجربة مستخدم كاملة تجعل العميل يشتري ويراسلنا فوراً. أنصح بهم بشدة."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=9" alt="نور قاسم" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>نور قاسم</h4>
+            <span>مؤسسة براند عطور</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Unique Card 5 -->
+      <div class="review-card rc-5">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"سرعة الإطلاق كانت مذهلة. خلال 48 ساعة كان متجري يعمل ويستقبل الطلبات على رقمنا الرسمي. الاحترافية في التعامل تجعل دكان الخيار الأول."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=12" alt="عمر طارق" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>عمر طارق</h4>
+            <span>صاحب محمصة قهوة</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duplicated for Infinite Scroll -->
+      <div class="review-card rc-1">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"تجربتي مع دكان كانت استثنائية. من أول يوم فهموا المطلوب وصمموا متجر يعكس هوية البراند. نظام الطلب على الواتساب سهل علينا الكثير ورفع المبيعات."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=11" alt="أحمد عبدالله" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>أحمد عبدالله</h4>
+            <span>مؤسس براند ملابس محلي</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card rc-2">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"أفضل ما في دكان هو الدعم الفني. لم يتركوني بعد الإطلاق. لوحة التحكم جداً بسيطة، واستقبال الفواتير جاهزة على الواتساب وفر علي جهد كبير."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=5" alt="سارة علي" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>سارة علي</h4>
+            <span>صاحبة متجر مستحضرات تجميل</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card rc-3">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"كنت متخوف من تعقيد الدفع الإلكتروني، لكن فريق دكان اقترح نظام الطلب المباشر. المتجر أنيق جداً والعميل يطلب بسهولة تامة. عمل احترافي."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=8" alt="محمد حسن" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>محمد حسن</h4>
+            <span>مدير متجر إلكترونيات</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card rc-4">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"التصميم الذي استلمته فاق توقعاتي. لم يستخدموا قوالب جاهزة مكررة، بل صمموا تجربة مستخدم كاملة تجعل العميل يشتري ويراسلنا فوراً. أنصح بهم بشدة."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=9" alt="نور قاسم" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>نور قاسم</h4>
+            <span>مؤسسة براند عطور</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card rc-5">
+        <i data-lucide="quote" class="quote-bg"></i>
+        <p class="review-text">"سرعة الإطلاق كانت مذهلة. خلال 48 ساعة كان متجري يعمل ويستقبل الطلبات على رقمنا الرسمي. الاحترافية في التعامل تجعل دكان الخيار الأول."</p>
+        <div class="reviewer">
+          <img src="https://i.pravatar.cc/150?img=12" alt="عمر طارق" class="reviewer-img">
+          <div class="reviewer-info">
+            <h4>عمر طارق</h4>
+            <span>صاحب محمصة قهوة</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="kicker reveal">طريقة العمل</div>
+      <h2 class="h2 reveal">من الفكرة إلى أول مبيعة. <br>هكذا نعمل معاً.</h2>
+      <hr class="mdod reveal">
+      
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-icon-wrap">٠١</div>
+          <div>
+            <h3 class="step-title">جلسة الاكتشاف والتخطيط</h3>
+            <p class="step-desc">نجتمع بك لفهم طبيعة منتجاتك، جمهورك المستهدف، وميزتك التنافسية. بناءً على ذلك، نضع الهيكلية الأساسية للمتجر ونحدد الوظائف المطلوبة لنجاحه.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-icon-wrap">٠٢</div>
+          <div>
+            <h3 class="step-title">التصميم والتطوير المخصص</h3>
+            <p class="step-desc">يبدأ فريقنا بتصميم واجهات تتوافق مع هويتك البصرية، ثم نقوم ببرمجة المتجر وربط نظام الطلبات والفواتير المباشرة عبر الواتساب الخاص بك.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-icon-wrap">٠٣</div>
+          <div>
+            <h3 class="step-title">المراجعة والإطلاق الرسمي</h3>
+            <p class="step-desc">بعد اختبار الأداء والسرعة وعمليات الشراء الوهمية، نسلمك المتجر جاهزاً. نقدم لك تدريباً على لوحة التحكم، ونعلن الإطلاق الرسمي لمتجرك.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-icon-wrap">٠٤</div>
+          <div>
+            <h3 class="step-title">النمو والدعم المستمر</h3>
+            <p class="step-desc">علاقتنا لا تنتهي بالإطلاق. نحن هنا لتقديم الدعم الفني، الصيانة الدورية، وتقديم المشورة التقنية لضمان استمرار نمو مبيعاتك بلا توقف.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="section section-alt" id="pricing">
+    <div class="container">
+      <div class="kicker reveal">استثمر في نموك</div>
+      <h2 class="h2 reveal">باقات مصممة لتناسب حجم طموحك.</h2>
+      <hr class="mdod reveal">
+      <p class="lead reveal" style="max-width: 600px;">أسعار شفافة ومدروسة. اختر الباقة التي تلبي احتياجاتك الحالية، ويمكنك الترقية دائماً مع نمو أعمالك.</p>
+      
+      <div class="pricing-table">
+        <div class="price-card reveal">
+          <h3 class="plan-name">الباقة الأساسية</h3>
+          <p class="plan-desc">الخيار الأمثل للعلامات التجارية الناشئة التي ترغب في دخول السوق بقوة وميزانية معقولة.</p>
+          <div class="plan-price">
+            <span class="price-val">٣٥</span>
+            <span class="price-cur">ألف دينار / شهرياً</span>
+          </div>
+          <ul class="plan-features">
+            <li><i data-lucide="check-circle-2"></i> تصميم واجهة احترافية متجاوبة</li>
+            <li><i data-lucide="check-circle-2"></i> إضافة حتى 100 منتج</li>
+            <li><i data-lucide="check-circle-2"></i> استقبال الطلبات والفواتير عبر الواتساب</li>
+            <li><i data-lucide="check-circle-2"></i> لوحة تحكم لإدارة المنتجات</li>
+            <li><i data-lucide="check-circle-2"></i> استضافة آمنة + شهادة SSL</li>
+            <li><i data-lucide="check-circle-2"></i> دعم فني خلال أوقات العمل</li>
+          </ul>
+          <a href="#" class="btn btn-outline">اختر الباقة الأساسية</a>
+        </div>
+        
+        <div class="price-card premium reveal">
+          <h3 class="plan-name">الباقة الاحترافية</h3>
+          <p class="plan-desc">حل متكامل للشركات والمتاجر التي تبحث عن ميزات متقدمة وقدرة استيعابية ضخمة للمبيعات.</p>
+          <div class="plan-price">
+            <span class="price-val">٥٥</span>
+            <span class="price-cur">ألف دينار / شهرياً</span>
+          </div>
+          <ul class="plan-features">
+            <li><i data-lucide="check-circle-2"></i> تصميم واجهة مخصصة بالكامل</li>
+            <li><i data-lucide="check-circle-2"></i> عدد منتجات لامحدود</li>
+            <li><i data-lucide="check-circle-2"></i> نظام فواتير متقدم ومفصل عبر الواتساب</li>
+            <li><i data-lucide="check-circle-2"></i> تقارير مبيعات وتحليلات للزوار</li>
+            <li><i data-lucide="check-circle-2"></i> تحسين محركات البحث (SEO)</li>
+            <li><i data-lucide="check-circle-2"></i> دعم فني ذو أولوية 24/7</li>
+          </ul>
+          <a href="#" class="btn btn-brand">اختر الباقة الاحترافية</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEGA FOOTER -->
+  <footer class="footer">
+    <div class="footer-cta container">
+      <h2 class="reveal">جاهز للانتقال بتجارتك إلى مستوى آخر؟</h2>
+      <a href="https://wa.me/9647817631103" target="_blank" rel="noopener noreferrer" class="btn btn-brand reveal">ابدأ الآن — تواصل معنا</a>
+    </div>
+    
+    <div class="footer-main container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">دكان<span style="color:var(--brand)">.</span></a>
+          <p class="footer-desc">الشريك التقني الرائد في العراق لتأسيس وإدارة المتاجر الإلكترونية. نحول الزوار إلى عملاء عبر تصاميم عصرية ونظام طلب مباشر.</p>
+          <div class="social-links">
+            <!-- Inline SVG for Instagram to ensure rendering -->
+            <a href="https://www.instagram.com/dukan.platform/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://wa.me/9647817631103" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <i data-lucide="phone"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">الروابط السريعة</h4>
+          <div class="footer-links">
+            <a href="#about"><i data-lucide="chevron-left" width="16" height="16"></i> لماذا نحن؟</a>
+            <a href="#features"><i data-lucide="chevron-left" width="16" height="16"></i> المميزات</a>
+            <a href="#process"><i data-lucide="chevron-left" width="16" height="16"></i> طريقة العمل</a>
+            <a href="#pricing"><i data-lucide="chevron-left" width="16" height="16"></i> الأسعار والتكلفة</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">تواصل معنا</h4>
+          <div class="footer-links">
+            <!-- Replaced Email with Instagram handle using Inline SVG -->
+            <a href="https://www.instagram.com/dukan.platform/" target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              @dukan.platform
+            </a>
+            <a href="#"><i data-lucide="map-pin" width="16" height="16"></i> بغداد، العراق</a>
+            <a href="https://wa.me/9647817631103" target="_blank" rel="noopener noreferrer" style="direction:ltr; display:inline-flex;">
+              +964 781 763 1103 <i data-lucide="phone" width="16" height="16" style="margin-left:8px;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom" style="justify-content: center;">
+        <div>&copy; 2026 دكان. جميع الحقوق محفوظة.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Sticky Header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // GSAP Animations
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+      
+      const revealElements = document.querySelectorAll('.reveal');
+      revealElements.forEach((el) => {
+        gsap.to(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+      });
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      });
+    }
+  </script>
+</body>
+</html>
