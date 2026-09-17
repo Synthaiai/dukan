@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dukan-iq.pages.dev/sitemap.xml
